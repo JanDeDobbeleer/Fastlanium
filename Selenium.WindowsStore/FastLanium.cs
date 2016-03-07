@@ -27,7 +27,7 @@ namespace Selenium.WindowsStore
         static int Main(string[] args)
         {
             if (!ValidateArgs(args))
-                return (int) ExitCodes.InvalidArgs;
+                return (int)ExitCodes.InvalidArgs;
             var driver = new ChromeDriver();
             if (!Authenticate(driver))
                 return (int)ExitCodes.UnableToAuthenticate;
@@ -65,13 +65,11 @@ namespace Selenium.WindowsStore
                 driver.Navigate().GoToUrl("https://dev.windows.com");
                 var signinButton = driver.FindElementById("meControl");
                 signinButton.Click();
-                var emailField = driver.FindElementById("cred_userid_inputtext");
-                emailField.SendKeys(_userName);
-                var passwordField = driver.FindElementById("cred_password_inputtext");
-                passwordField.SendKeys(_passWord);
-                passwordField.Submit();
-                driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(10));
-                passwordField = driver.FindElementById("i0118");
+                var link = driver.FindElementByLinkText("Sign in with a Microsoft account");
+                link.Click();
+                var emailInput = driver.FindElementById("i0116");
+                emailInput.SendKeys(_userName);
+                var passwordField = driver.FindElementById("i0118");
                 passwordField.SendKeys(_passWord);
                 passwordField.Submit();
                 //hack for the stupid confirm account shit I have right now.
